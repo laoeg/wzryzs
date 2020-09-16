@@ -2,7 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:toast/toast.dart';
+import 'package:wzryzs/page/LoginPage.dart';
+import 'package:wzryzs/page/SplashPage.dart';
+import 'package:wzryzs/page/main/ChartPage.dart';
+import 'package:wzryzs/page/main/ClubPage.dart';
+import 'package:wzryzs/page/main/MinePage.dart';
 import 'package:wzryzs/page/main/NewsPage.dart';
+import 'package:wzryzs/page/main/RecordPage.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -15,8 +21,51 @@ class MainPage extends StatefulWidget {
 class StateMainPage extends State<MainPage> {
   int lastTapTime = 0;
 
+  int tabIndex = 0;
+
+  List<BottomNavigationBarItem> bottomNavigaitonBar = [];
+
+  List<Widget> tabView = [
+    NewsPage(),
+    ChartPage(),
+    ClubPage(),
+    RecordPage(),
+    MinePage()
+  ];
+
+  List<String> tabTitle = ["资讯", "聊天", "社区", "战绩", "我"];
+  List<String> tabImage = [
+    "images/v4/hot_tag_rank2.png",
+    "images/v4/img_search_visible.png",
+    "images/v4/img_publish_video.png",
+    "images/v4/img_publish_photo.png",
+    "images/v4/img_publish_more.png"
+  ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
+    bottomNavigaitonBar = [];
+    for (int i = 0; i < tabTitle.length; i++) {
+      bottomNavigaitonBar.add(BottomNavigationBarItem(
+        //激活状态是的字体颜色为蓝色,未激活的为gray
+          title: Text(tabTitle[i],
+              style: TextStyle(
+                  color: tabIndex == i ? Colors.orangeAccent : Colors.grey,
+                  fontSize: 11.0)),
+          icon: Image.asset(
+            tabImage[i],
+            color: tabIndex == i ? Colors.orangeAccent : Colors.grey,
+            width: 25.0,
+            height: 25.0,
+          )));
+    }
     // TODO: implement build
     return WillPopScope(
         child: Scaffold(
@@ -34,7 +83,21 @@ class StateMainPage extends State<MainPage> {
 //              ),
 //            ),
           ),
-          body: NewsPage(),
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            items: bottomNavigaitonBar,
+            onTap: (index) {
+              if (tabIndex == index) {
+                return;
+              }
+              tabIndex = index;
+              setState(() {});
+            },
+          ),
+          body: IndexedStack(
+            index: tabIndex,
+            children: tabView,
+          ),
         ),
         onWillPop: () async {
           print("onWillPop************");

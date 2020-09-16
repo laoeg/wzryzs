@@ -12,7 +12,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class StateLoginPage extends State<LoginPage> {
-  bool agree = false;
+  bool agree = true;
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +118,7 @@ class StateLoginPage extends State<LoginPage> {
             right: 60,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
                   onTap: () {
@@ -127,7 +127,8 @@ class StateLoginPage extends State<LoginPage> {
                     });
                   },
                   child: Container(
-                    margin: EdgeInsets.only(top: 4),
+//                    margin: EdgeInsets.only(top: 4),
+                  padding: EdgeInsets.only(top: 2.6),
                     child: Image.asset(
                       agree
                           ? "images/v4/login_license_checked.png"
@@ -138,7 +139,7 @@ class StateLoginPage extends State<LoginPage> {
                   ),
                 ),
                 Expanded(
-                    child: Text.rich(TextSpan(children: [
+                    child: Text.rich(TextSpan(style:TextStyle(height: 1.2),children: [
                   TextSpan(
                       text: "我已经详细阅读病痛与：",
                       style: TextStyle(
