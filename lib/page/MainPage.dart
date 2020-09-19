@@ -9,7 +9,7 @@ import 'package:wzryzs/page/main/ClubPage.dart';
 import 'package:wzryzs/page/main/MinePage.dart';
 import 'package:wzryzs/page/main/MyNewsPage.dart';
 import 'package:wzryzs/page/main/NewsPage.dart';
-import 'package:wzryzs/page/main/RecordPage.dart';
+import 'package:wzryzs/page/main/pageView/RecordPage.dart';
 
 class MainPage extends StatefulWidget {
   @override

@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wzryzs/page/main/FavouritePage.dart';
+import 'package:wzryzs/page/main/pageView/FavouritePage.dart';
 
 class NewsPage extends StatefulWidget {
   @override
