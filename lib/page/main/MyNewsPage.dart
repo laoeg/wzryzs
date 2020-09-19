@@ -126,6 +126,8 @@ class StateMyNewsPage extends State<MyNewsPage> with TickerProviderStateMixin {
             children: [
               Container(
                 width: 120,
+                height: 43,
+                color: Colors.grey[50],
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -169,9 +171,6 @@ class StateMyNewsPage extends State<MyNewsPage> with TickerProviderStateMixin {
                               ),
                             );
                           }),
-                    ),
-                    SizedBox(
-                      height: 0,
                     ),
                     Transform.translate(
                       offset: Offset(titleOneOffset + 22, 0),
