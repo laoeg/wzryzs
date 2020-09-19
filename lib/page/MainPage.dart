@@ -7,6 +7,7 @@ import 'package:wzryzs/page/SplashPage.dart';
 import 'package:wzryzs/page/main/ChartPage.dart';
 import 'package:wzryzs/page/main/ClubPage.dart';
 import 'package:wzryzs/page/main/MinePage.dart';
+import 'package:wzryzs/page/main/MyNewsPage.dart';
 import 'package:wzryzs/page/main/NewsPage.dart';
 import 'package:wzryzs/page/main/RecordPage.dart';
 
@@ -26,7 +27,7 @@ class StateMainPage extends State<MainPage> {
   List<BottomNavigationBarItem> bottomNavigaitonBar = [];
 
   List<Widget> tabView = [
-    NewsPage(),
+    MyNewsPage(),
     ChartPage(),
     ClubPage(),
     RecordPage(),
@@ -83,6 +84,7 @@ class StateMainPage extends State<MainPage> {
 //              ),
 //            ),
           ),
+//          backgroundColor: Colors.white70,
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             items: bottomNavigaitonBar,
