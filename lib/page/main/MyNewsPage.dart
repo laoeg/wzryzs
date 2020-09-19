@@ -46,19 +46,9 @@ class StateMyNewsPage extends State<MyNewsPage> with TickerProviderStateMixin {
 
   Animation bgOffsetAnimation;
   AnimationController bgOffsetAnimationController;
-
+  RecordPage recordPage = RecordPage();
   List<Widget> pages = [
     FavouritePage(),
-    RecordPage(),
-    RecordPage(),
-    RecordPage(),
-    RecordPage(),
-    RecordPage(),
-    RecordPage(),
-    RecordPage(),
-    RecordPage(),
-    RecordPage(),
-    RecordPage(),
   ];
 
   @override
@@ -66,7 +56,7 @@ class StateMyNewsPage extends State<MyNewsPage> with TickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     for (int i = 0; i < 10; i++) {
-      titlesTwo.add("标题${i}");
+      pages.add(recordPage);
     }
     bgOffsetAnimationController =
         AnimationController(duration: Duration(milliseconds: 100), vsync: this);
@@ -239,6 +229,7 @@ class StateMyNewsPage extends State<MyNewsPage> with TickerProviderStateMixin {
                       if (position == 1) {
                         print(scrollController.offset);
                         print(bgOffset);
+                        // 最后一个item切换到第一个item时会有误差（bgoffset不为0），使用动画过度误差
                         if (bgOffset != 0) {
                           bgOffsetAnimation =
                               Tween<double>(begin: bgOffset, end: 0)
@@ -254,11 +245,6 @@ class StateMyNewsPage extends State<MyNewsPage> with TickerProviderStateMixin {
                       }
                       if (position != 0) {
                         activePositionTwo = position - 1;
-//                    print("onPageChanged:" + getOffset(activePositionTwo).toString());
-//                    print("onPageChanged:" +
-//                        (measureTextWidth(titleList[activePositionTwo], null)).toString());
-//                    print("onPageChanged:" +
-//                        (MediaQuery.of(context).size.width / 2).toString());
                         if (needScrollAnimation) {
                           double scroll = ((getOffset(activePositionTwo) +
                                           (measureTextWidth(
@@ -277,6 +263,11 @@ class StateMyNewsPage extends State<MyNewsPage> with TickerProviderStateMixin {
                                           2) -
                                   screenWidth / 2
                               : 0;
+                          //ios滚动大于自身的宽度，会向右边滚动，然后反弹回去
+                          if (scroll >
+                              scrollController.position.maxScrollExtent) {
+                            scroll = scrollController.position.maxScrollExtent;
+                          }
                           scrollController.animateTo(scroll,
                               duration: Duration(milliseconds: 300),
                               curve: Curves.easeOut);
@@ -297,23 +288,24 @@ class StateMyNewsPage extends State<MyNewsPage> with TickerProviderStateMixin {
                 child: Stack(
                   children: [
                     Container(
-                      color: Colors.grey[50],
+                        color: Colors.grey[50],
                         child: Transform.translate(
-                      offset: Offset(bgOffset - scrollOffset, 0),
-                      child: Container(
-                        height: 40,
-                        width: getOffset(titleList.length),
-                        margin: EdgeInsets.only(left: 10, right: 10),
-                        alignment: Alignment.centerLeft,
-                        child: Image.asset("images/v4/indicator_tab_bg.9.png",
-                            width: measureTextWidth(
-                                    titleList[activePositionTwo], null) +
-                                10
+                          offset: Offset(bgOffset - scrollOffset, 0),
+                          child: Container(
+                            height: 40,
+                            width: getOffset(titleList.length),
+                            margin: EdgeInsets.only(left: 10, right: 10),
+                            alignment: Alignment.centerLeft,
+                            child: Image.asset(
+                                "images/v4/indicator_tab_bg.9.png",
+                                width: measureTextWidth(
+                                        titleList[activePositionTwo], null) +
+                                    10
 //                  height: 23,
 //                  fit: BoxFit.contain,
-                            ),
-                      ),
-                    )),
+                                ),
+                          ),
+                        )),
                     Container(
                       height: 40,
                       child: ListView.builder(
@@ -342,9 +334,16 @@ class StateMyNewsPage extends State<MyNewsPage> with TickerProviderStateMixin {
                                                 2) -
                                         screenWidth / 2
                                     : 0;
+                                //ios滚动大于自身的宽度，会向右边滚动，然后反弹回去
+                                if (scroll >
+                                    scrollController.position.maxScrollExtent) {
+                                  scroll =
+                                      scrollController.position.maxScrollExtent;
+                                }
                                 scrollController.animateTo(scroll,
                                     duration: Duration(milliseconds: 300),
                                     curve: Curves.easeOut);
+                                // pageController是PageView的控制器，index是滚动标题栏的下标
                                 pageController.animateToPage(index + 1,
                                     duration: Duration(milliseconds: 300),
                                     curve: Curves.easeOut);
